@@ -1,0 +1,95 @@
+<style>
+    html, body {
+        display: flex;
+        overflow: hidden;
+    }
+    
+    body{
+        width: 100%;
+        flex-direction: column;
+        background-color: #EFEFEF;
+    }
+    
+    .heading {
+        display: flex;
+        align-items: center;
+        margin-bottom: 4px;
+    }
+    
+    .heading > h1 {
+        margin: 0px;
+        margin-right: 16px;
+    }
+    
+    .heading > * {
+        display: inline-block;
+    }
+    
+    .heading > .zoom {
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    
+    .heading > button {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .container {
+        display: flex;
+        flex-grow: 1;
+    }
+    
+    .map-container {
+        display: flex;
+        flex-grow: 1;
+    }
+    
+    .map {
+        position: relative;
+        width: 100%;
+        overflow: scroll;
+    }
+    
+    .map > img,
+    .map > canvas {
+        position: absolute;
+    }
+    
+    .controls {
+        width: 30%;
+        padding-left: 8px;
+    }
+    
+    select {
+        height: 30px;
+    }
+</style>
+
+<div class="heading">
+    <h1>Korok Seed Tracker</h1>
+    <button>-</button>
+    <div class="zoom">100%</div>
+    <button>+</button>
+</div>
+<div class="container">
+    <div class="map-container">
+        <div class="map">
+            <img>
+            <canvas></canvas>
+        </div>
+    </div>
+    <div class="controls">
+        <select id="region-select"></select>
+    </div>
+</div>
+<script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+
+<script src="scripts/state.js"></script>
+<script src="scripts/map-controller.js"></script>
+<script src="scripts/canvas-controller.js"></script>
+<script src="scripts/region-controller.js"></script>
+<script src="scripts/zoom-controller.js"></script>

@@ -1,0 +1,101 @@
+const state = (() => ({
+    regions: {
+        Akkala: {
+            name: 'Akkala',
+            filepath: 'pictures/Akkala.png',
+            width: 850,
+            height: 1393,
+        },
+        Central: {
+            name: 'Central',
+            filepath: 'pictures/Central.png',
+            width: 900,
+            height: 937,
+        },
+        Dueling_Peaks: {
+            name: 'Dueling Peaks',
+            filepath: 'pictures/Dueling_Peaks.png',
+            width: 920,
+            height: 602,
+        },
+        Eldin: {
+            name: 'Eldin',
+            filepath: 'pictures/Eldin.png',
+            width: 950,
+            height: 1176,
+        },
+        Faron: {
+            name: 'Faron',
+            filepath: 'pictures/Faron.png',
+            width: 900,
+            height: 566,
+        },
+        Gerudo: {
+            name: 'Gerudo',
+            filepath: 'pictures/Gerudo.png',
+            width: 3578,
+            height: 2308,
+        },
+        Great_Plateau: {
+            name: 'Great Plateau',
+            filepath: 'pictures/Great_Plateau.png',
+            width: 1261,
+            height: 1018,
+        },
+        Hateno: {
+            name: 'Hateno',
+            filepath: 'pictures/Hateno.png',
+            width: 932,
+            height: 926,
+        },
+        Hebra: {
+            name: 'Hebra',
+            filepath: 'pictures/Hebra.png',
+            width: 2251,
+            height: 1266,
+        },
+        Hyrule_Castle: {
+            name: 'Hyrule Castle',
+            filepath: 'pictures/Hyrule_Castle.png',
+            width: 950,
+            height: 970,
+        },
+        Lake: {
+            name: 'Lake',
+            filepath: 'pictures/Lake.png',
+            width: 900,
+            height: 755,
+        },
+        Lanayru: {
+            name: 'Lanayru',
+            filepath: 'pictures/Lanayru.png',
+            width: 900,
+            height: 567,
+        },
+        Ridgeland: {
+            name: 'Ridgeland',
+            filepath: 'pictures/Ridgeland.png',
+            width: 3871,
+            height: 3368,
+        },
+        Tabantha: {
+            name: 'Tabantha',
+            filepath: 'pictures/Tabantha.png',
+            width: 1829,
+            height: 2608,
+        },
+        Wasteland: {
+            name: 'Wasteland',
+            filepath: 'pictures/Wasteland.png',
+            width: 950,
+            height: 662,
+        },
+        Woodland: {
+            name: 'Woodland',
+            filepath: 'pictures/Woodland.png',
+            width: 950,
+            height: 747,
+        },
+    },
+    zoom: 100,
+}))()
