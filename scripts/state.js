@@ -8,12 +8,12 @@ const state = (() => {
         return events
     }, {})
     
-    const seedState = ({regionId, id, x, y}) => ({
+    const seedState = ({regionId, id, x, y}, isChecked = false) => ({
         regionId,
         id,
         x,
         y,
-        isChecked: false,
+        isChecked,
         getRegion(){
             return state.regions[this.regionId]
         },
@@ -70,7 +70,7 @@ const state = (() => {
             numberOffset,
             fontSize,
             
-            addSeed({x, y}){
+            addSeed({x, y}, isChecked = false){
                 const nextId = Object.keys(this.seeds).length + 1
                 this.seeds[nextId] = seedState({
                     regionId: this.id,
@@ -85,6 +85,9 @@ const state = (() => {
                     delete this.seeds[lastId]
                 }
             },
+            clearSeeds(){
+                this.seeds = {}
+            }
         }
     }
     
@@ -210,7 +213,7 @@ const state = (() => {
             this.emit(EVENTS.regionChanged)
         },
         addSeed(mouse){
-            this.getSelectedRegion().addSeed(mouse)
+            this.getSelectedRegion().addSeed(mouse, false)
             this.setCachedSeeds()
             this.clearSelectedSeed()
             const eventEmitted = this.checkHighlightedSeed(mouse)
@@ -279,6 +282,35 @@ const state = (() => {
                 this.selectedSeed.y += y
                 this.emit(EVENTS.seedsChanged)
             }
+        },
+        reorder(){
+            if(this.selectedSeed === null){
+                return
+            }
+            
+            const region = this.getSelectedRegion()
+            const {seeds} = region
+            const seedList = Object.values(seeds).sort(({id: id1}, {id: id2}) => (id1 - id2))
+            
+            const newId = parseInt(prompt('Enter new id'))
+            if(isNaN(newId) || this.selectedSeed.id === newId || newId < 1 || newId > seedList.length){
+                return
+            }
+            const oldIndex = this.selectedSeed.id - 1
+            const newIndex = newId - 1
+            
+            region.clearSeeds()
+            
+            seedList.splice(oldIndex, 1)
+            seedList.splice(newIndex, 0, this.selectedSeed)
+            
+            seedList.forEach(({x, y, isChecked}) => {
+                region.addSeed({x, y}, isChecked)
+            })
+            
+            this.setCachedSeeds()
+            this.selectedSeed = region.seeds[newId]
+            this.emit(EVENTS.seedsChanged)
         },
     }
     

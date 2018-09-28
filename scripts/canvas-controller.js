@@ -71,6 +71,10 @@
             state.removeSeed()
         }
         
+        if(key === 'r'){
+            state.reorder()
+        }
+        
         if(state.getSelectedSeedId() !== null && ['w', 'a', 's', 'd'].indexOf(key) !== -1){
             const nudge = {
                 x: key === 'a'? -1: key === 'd'? 1: 0,
