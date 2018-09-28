@@ -1,13 +1,7 @@
-/*
-    requires
-        state
-        mapController
-        canvasController
-*/
-
-const regionController = (() => {
+(() => {
     const select = $('#region-select')
     
+    // populate select options
     Object.entries(state.regions).forEach(([key, {name}]) => {
         const option = document.createElement('option')
         option.text = name
@@ -15,19 +9,16 @@ const regionController = (() => {
         select.append(option)
     })
     
-    const controller = {
-        updateRegion(){
-            const regionId = select.val()
-            const region = state.regions[regionId]
-            const zoom = state.zoom/100
-            
-            mapController.setRegion(region, zoom)
-            canvasController.setSize(region, zoom)
+    // prevent keys changing the select option
+    select.keydown(({key}) => {
+        if(key !== 'ArrowLeft' && key !== 'ArrowRight'){
+            event.preventDefault()
         }
-    }
+    })
     
-    select.change(controller.updateRegion)
-    controller.updateRegion()
-    
-    return controller
+    // event triggers
+    select.change(event => {
+        const regionId = select.val()
+        state.setRegion(regionId)
+    })
 })()

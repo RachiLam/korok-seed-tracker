@@ -1,5 +1,40 @@
-const state = (() => ({
-    regions: {
+const state = (() => {
+    const EVENTS = [
+        'zoomChanged',
+        'regionChanged',
+        'seedsChanged',
+    ].reduce((events, key) => {
+        events[key] = key
+        return events
+    }, {})
+    
+    const seedState = ({id, x, y}) => ({
+        id,
+        x,
+        y,
+        isChecked: false,
+    })
+    
+    const regionState = () => ({
+        seeds: {},
+        
+        addSeed({x, y}){
+            const nextId = Object.keys(this.seeds).length + 1
+            this.seeds[nextId] = seedState({
+                id: nextId,
+                x,
+                y,
+            })
+        },
+        removeSeed(){
+            const lastId = Object.keys(this.seeds).length
+            if(lastId > 0){
+                delete this.seeds[lastId]
+            }
+        },
+    })
+    
+    const regions = {
         Akkala: {
             name: 'Akkala',
             filepath: 'pictures/Akkala.png',
@@ -96,6 +131,86 @@ const state = (() => ({
             width: 950,
             height: 747,
         },
-    },
-    zoom: 100,
-}))()
+    }
+    
+    const stateActions = {
+        zoomIn(){
+            if(state.zoom < 300){
+                this.zoom += 10
+                this.emit(EVENTS.zoomChanged)
+            }
+        },
+        zoomOut(){
+            if(state.zoom > 10){
+                this.zoom -= 10
+                this.emit(EVENTS.zoomChanged)
+            }
+        },
+        setRegion(regionId){
+            this.selectedRegion = regionId
+            this.emit(EVENTS.regionChanged)
+        },
+        addSeed(mouse){
+            this.getSelectedRegion().addSeed(mouse)
+            this.emit(EVENTS.seedsChanged)
+        },
+        removeSeed(){
+            this.getSelectedRegion().removeSeed()
+            this.emit(EVENTS.seedsChanged)
+        }
+    }
+    
+    const stateGetters = {
+        getSelectedRegion(){
+            return this.regions[this.selectedRegion]
+        },
+        getZoom(){
+            return this.zoom/100
+        }
+    }
+    
+    const stateEvents = {
+        listeners: Object.keys(EVENTS).reduce((listeners, key) => {
+            listeners[key] = []
+            return listeners
+        }, {}),
+        on(event, handler){
+            if(this.listeners[event] === undefined){
+                throw new Error(`State event "${event}" is undefined`)
+            }else if(typeof handler !== 'function'){
+                throw new Error(`Handler should be a function`)
+            }
+            
+            this.listeners[event].push(handler)
+        },
+        emit(event){
+            if(this.listeners[event] === undefined){
+                throw new Error(`State event "${event}" is undefined`)
+            }
+            
+            this.listeners[event].forEach(handler => {
+                handler(this)
+            })
+        },
+    }
+    
+    const state = {
+        ...stateActions,
+        ...stateGetters,
+        ...stateEvents,
+        writeMode: true,
+        zoom: 100,
+        selectedRegion: 'Akkala',
+        regions: Object.entries(regions).reduce((regions, [regionId, region]) => {
+            regions[regionId] = {
+                id: regionId,
+                ...region,
+                ...regionState(),
+            }
+            
+            return regions
+        }, {}),
+    }
+    
+    return state
+})()
