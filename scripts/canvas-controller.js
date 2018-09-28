@@ -13,49 +13,13 @@
             }
         },
         redraw(state){
-            const {id: regionId, width, height, seeds} = state.getSelectedRegion()
+            const {id: regionId, width, height, baseRadius, numberOffset, fontSize} = state.getSelectedRegion()
             const zoom = state.getZoom()
-            
-            let baseRadius
-            let numberOffset
-            let fontSize
-            switch(regionId){
-                case 'Gerudo':
-                case 'Great_Plateau':
-                case 'Hebra':
-                case 'Ridgeland':
-                case 'Tabantha':
-                    baseRadius = 24
-                    numberOffset = 30
-                    fontSize = 26
-                    break
-                case 'Hyrule_Castle':
-                    baseRadius = 20
-                    numberOffset = 30
-                    fontSize = 20
-                    break
-                case 'Hateno':
-                case 'Woodland':
-                    baseRadius = 8
-                    numberOffset = 10
-                    fontSize = 10
-                    break
-                case 'Lanayru':
-                case 'Wasteland':
-                    baseRadius = 6
-                    numberOffset = 10
-                    fontSize = 10
-                    break
-                default:
-                    baseRadius = 10
-                    numberOffset = 14
-                    fontSize = 12
-                    break
-            }
+            const highlightedSeedId = state.getHighlightedSeedId()
             
             context.clearRect(0, 0, width*zoom, height*zoom)
-            Object.entries(seeds).forEach(([key, {id: seedId, x, y}]) => {
-                const color = '#FFA500'
+            state.getCachedSeeds().forEach(({id: seedId, x, y}) => {
+                const color = seedId === highlightedSeedId? '#FF0000': '#FFA500'
                 
                 context.beginPath()
                 context.strokeStyle = color
@@ -86,6 +50,10 @@
         if(state.writeMode){
             state.addSeed(coordinates)
         }
+    })
+    $(canvas).mousemove(event => {
+        const coordinates = controller.getNormalCoordinates(event)
+        state.checkHighlightedSeed(coordinates)
     })
     $(document.body).keydown(({ctrlKey, key}) => {
         if(state.writeMode && ctrlKey && key.toLowerCase() === 'z'){
