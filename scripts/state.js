@@ -191,23 +191,28 @@ const state = (() => {
         zoomIn(){
             if(state.zoom < 300){
                 this.zoom += 10
+                this.clearSelectedSeed()
                 this.emit(EVENTS.zoomChanged)
             }
         },
         zoomOut(){
             if(state.zoom > 10){
                 this.zoom -= 10
+                this.clearSelectedSeed()
                 this.emit(EVENTS.zoomChanged)
             }
         },
         setRegion(regionId){
             this.selectedRegion = regionId
             this.setCachedSeeds()
+            this.highlightedSeed = null
+            this.clearSelectedSeed()
             this.emit(EVENTS.regionChanged)
         },
         addSeed(mouse){
             this.getSelectedRegion().addSeed(mouse)
             this.setCachedSeeds()
+            this.clearSelectedSeed()
             const eventEmitted = this.checkHighlightedSeed(mouse)
             if(!eventEmitted){
                 this.emit(EVENTS.seedsChanged)
@@ -219,6 +224,7 @@ const state = (() => {
         removeSeed(){
             this.getSelectedRegion().removeSeed()
             this.setCachedSeeds()
+            this.clearSelectedSeed()
             this.emit(EVENTS.seedsChanged)
         },
         checkHighlightedSeed(mouse){
@@ -251,6 +257,29 @@ const state = (() => {
             
             return emitEvent
         },
+        checkSelection(mouse){
+            const oldSelectedSeed = this.selectedSeed
+            
+            if(this.highlightedSeed !== null){
+                this.selectedSeed = this.selectedSeed === null || this.selectedSeed !== this.highlightedSeed? this.highlightedSeed: null
+            }else{
+                this.selectedSeed = null
+            }
+            
+            if(oldSelectedSeed !== this.selectedSeed){
+                this.emit(EVENTS.seedsChanged)
+            }
+        },
+        clearSelectedSeed(){
+            this.selectedSeed = null
+        },
+        nudgeSelectedSeed({x, y}){
+            if(this.selectedSeed !== null){
+                this.selectedSeed.x += x
+                this.selectedSeed.y += y
+                this.emit(EVENTS.seedsChanged)
+            }
+        },
     }
     
     const stateGetters = {
@@ -268,6 +297,11 @@ const state = (() => {
         getHighlightedSeedId(){
             return this.highlightedSeed !== null?
                 this.highlightedSeed.id:
+                null
+        },
+        getSelectedSeedId(){
+            return this.selectedSeed !== null?
+                this.selectedSeed.id:
                 null
         },
         getZoom(){
@@ -309,6 +343,7 @@ const state = (() => {
         selectedRegion: null,
         cachedSeeds: [],
         highlightedSeed: null,
+        selectedSeed: null,
         regions: Object.entries(regions).reduce((regions, [regionId, region]) => {
             regions[regionId] = {
                 id: regionId,

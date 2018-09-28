@@ -16,10 +16,15 @@
             const {id: regionId, width, height, baseRadius, numberOffset, fontSize} = state.getSelectedRegion()
             const zoom = state.getZoom()
             const highlightedSeedId = state.getHighlightedSeedId()
+            const selectedSeedId = state.getSelectedSeedId()
             
             context.clearRect(0, 0, width*zoom, height*zoom)
             state.getCachedSeeds().forEach(({id: seedId, x, y}) => {
-                const color = seedId === highlightedSeedId? '#FF0000': '#FFA500'
+                const color = (
+                    seedId === selectedSeedId? '#FF00FF':
+                    seedId === highlightedSeedId? '#FF0000':
+                    '#FFA500'
+                )
                 
                 context.beginPath()
                 context.strokeStyle = color
@@ -47,8 +52,12 @@
     // event triggers
     $(canvas).click(event => {
         const coordinates = controller.getNormalCoordinates(event)
-        if(state.writeMode){
+        if(state.writeMode && !event.ctrlKey){
             state.addSeed(coordinates)
+        }
+        
+        if(event.ctrlKey){
+            state.checkSelection(coordinates)
         }
     })
     $(canvas).mousemove(event => {
@@ -56,8 +65,18 @@
         state.checkHighlightedSeed(coordinates)
     })
     $(document.body).keydown(({ctrlKey, key}) => {
-        if(state.writeMode && ctrlKey && key.toLowerCase() === 'z'){
+        key = key.toLowerCase()
+        
+        if(state.writeMode && ctrlKey && key === 'z'){
             state.removeSeed()
+        }
+        
+        if(state.getSelectedSeedId() !== null && ['w', 'a', 's', 'd'].indexOf(key) !== -1){
+            const nudge = {
+                x: key === 'a'? -1: key === 'd'? 1: 0,
+                y: key === 'w'? -1: key === 's'? 1: 0,
+            }
+            state.nudgeSelectedSeed(nudge)
         }
     })
     

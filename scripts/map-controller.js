@@ -5,6 +5,10 @@
     // wasd scroll controls
     const scrollAmount = 30
     $(document.body).keydown(event => {
+        if(state.getSelectedSeedId() !== null){
+            return
+        }
+        
         const top = mapContainer.scrollTop()
         const left = mapContainer.scrollLeft()
         
