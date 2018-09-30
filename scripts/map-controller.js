@@ -1,6 +1,7 @@
 (() => {
     const mapContainer = $('div.map')
     const [img] = $('div.map img')
+    let oldZoom = state.getZoom()
     
     // wasd scroll controls
     const scrollAmount = 30
@@ -11,7 +12,6 @@
         
         const top = mapContainer.scrollTop()
         const left = mapContainer.scrollLeft()
-        
         switch(event.key.toLowerCase()){
             case 'a':
                 mapContainer.scrollLeft(left - scrollAmount)
@@ -30,8 +30,22 @@
     
     const controller = {
         setZoom(width, height, zoom){
+            const mapFocus = {
+                x: (mapContainer.scrollLeft() + mapContainer.width()/2),
+                y: (mapContainer.scrollTop() + mapContainer.height()/2),
+            }
+            
+            const newFocus = {
+                x: (mapFocus.x/oldZoom)*zoom,
+                y: (mapFocus.y/oldZoom)*zoom,
+            }
+            
             img.width = width*zoom
             img.height = height*zoom
+            
+            mapContainer.scrollLeft(newFocus.x - mapContainer.width()/2)
+            mapContainer.scrollTop(newFocus.y - mapContainer.height()/2)
+            oldZoom = zoom
         },
         
         onRegionChange(state){
