@@ -19,7 +19,7 @@
             const selectedSeedId = state.getSelectedSeedId()
             
             context.clearRect(0, 0, width*zoom, height*zoom)
-            state.getCachedSeeds().forEach(({id: seedId, x, y}) => {
+            state.getCachedSeeds().forEach(({id: seedId, x, y, numberPosition}) => {
                 const color = (
                     seedId === selectedSeedId? '#FF00FF':
                     seedId === highlightedSeedId? '#FF0000':
@@ -34,7 +34,12 @@
                 
                 context.fillStyle = color
                 context.font=`${parseInt(fontSize*zoom)}px sans-serif`
-                context.fillText(seedId, x*zoom + numberOffset*zoom, y*zoom + 5*zoom)
+                
+                const textOffset = {
+                    x: numberPosition === 'j'? -1.5*numberOffset: numberPosition === 'l'? numberOffset: -5,
+                    y: numberPosition === 'i'? -1.1*numberOffset: numberPosition === 'k'? 1.6*numberOffset: 5,
+                }
+                context.fillText(seedId, x*zoom + textOffset.x*zoom, y*zoom + textOffset.y*zoom)
             })
         },
         
@@ -73,6 +78,10 @@
         
         if(key === 'r'){
             state.reorder()
+        }
+        
+        if(['i', 'j', 'k', 'l'].indexOf(key) !== -1){
+            state.alterNumberPosition(key)
         }
         
         if(state.getSelectedSeedId() !== null && ['w', 'a', 's', 'd'].indexOf(key) !== -1){

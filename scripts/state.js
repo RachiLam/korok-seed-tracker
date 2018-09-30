@@ -8,12 +8,13 @@ const state = (() => {
         return events
     }, {})
     
-    const seedState = ({regionId, id, x, y}, isChecked = false) => ({
+    const seedState = ({regionId, id, x, y, isChecked, numberPosition}) => ({
         regionId,
         id,
         x,
         y,
-        isChecked,
+        isChecked: isChecked || false,
+        numberPosition: numberPosition || 'l',    // i, j, k, l -> up, left, down, right
         getRegion(){
             return state.regions[this.regionId]
         },
@@ -24,6 +25,9 @@ const state = (() => {
             const {baseRadius} = this.getRegion()
             return distance <= baseRadius
         },
+        setNumberPosition(key){
+            this.numberPosition = key
+        }
     })
     
     const regionState = (regionId) => {
@@ -70,13 +74,12 @@ const state = (() => {
             numberOffset,
             fontSize,
             
-            addSeed({x, y}, isChecked = false){
+            addSeed(config){
                 const nextId = Object.keys(this.seeds).length + 1
                 this.seeds[nextId] = seedState({
                     regionId: this.id,
+                    ...config,
                     id: nextId,
-                    x,
-                    y,
                 })
             },
             removeSeed(){
@@ -213,7 +216,7 @@ const state = (() => {
             this.emit(EVENTS.regionChanged)
         },
         addSeed(mouse){
-            this.getSelectedRegion().addSeed(mouse, false)
+            this.getSelectedRegion().addSeed(mouse)
             this.setCachedSeeds()
             this.clearSelectedSeed()
             const eventEmitted = this.checkHighlightedSeed(mouse)
@@ -304,12 +307,20 @@ const state = (() => {
             seedList.splice(oldIndex, 1)
             seedList.splice(newIndex, 0, this.selectedSeed)
             
-            seedList.forEach(({x, y, isChecked}) => {
-                region.addSeed({x, y}, isChecked)
+            seedList.forEach(seed => {
+                region.addSeed(seed)
             })
             
             this.setCachedSeeds()
             this.selectedSeed = region.seeds[newId]
+            this.emit(EVENTS.seedsChanged)
+        },
+        alterNumberPosition(key){
+            if(this.selectedSeed === null){
+                return
+            }
+            
+            this.selectedSeed.setNumberPosition(key)
             this.emit(EVENTS.seedsChanged)
         },
     }
