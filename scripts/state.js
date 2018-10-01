@@ -3,6 +3,7 @@ const state = (() => {
         'zoomChanged',
         'regionChanged',
         'seedsChanged',
+        'loadSave',
     ].reduce((events, key) => {
         events[key] = key
         return events
@@ -323,6 +324,34 @@ const state = (() => {
             this.selectedSeed.setNumberPosition(key)
             this.emit(EVENTS.seedsChanged)
         },
+        saveState(){
+            const allSeeds = Object.entries(state.regions).reduce((allSeeds, [regionId, {seeds}]) => {
+                allSeeds[regionId] = seeds
+                return allSeeds
+            }, {})
+            const blob = new Blob([JSON.stringify(allSeeds, null, 4)], {type: "text/plain;charset=utf-8"})
+            const date = $.format.date(Date.now(), 'yyyy-MM-dd--HH-mm-ss')
+            saveAs(blob, `seeds--${date}.txt`)
+        },
+        loadSave(filename, saveString){
+            try{
+                const saveState = JSON.parse(saveString)
+                Object.entries(state.regions).forEach(([regionId, regionState]) => {
+                    regionState.seeds = {}
+                    Object.values(saveState[regionId]).forEach(seed => {
+                        regionState.addSeed({
+                            ...seed,
+                        })
+                    })
+                })
+                
+                this.lastFilename = filename
+                this.setRegion(this.selectedRegion)
+                this.emit(EVENTS.loadSave)
+            }catch(error){
+                console.log(error)
+            }
+        },
     }
     
     const stateGetters = {
@@ -381,6 +410,7 @@ const state = (() => {
         ...stateActions,
         ...stateGetters,
         ...stateEvents,
+        lastFilename: '',
         writeMode: true,
         zoom: 100,
         selectedRegion: null,
@@ -393,6 +423,13 @@ const state = (() => {
                 ...region,
                 ...regionState(regionId),
             }
+            
+            Object.values(initialState[regionId]).forEach(seed => {
+                regions[regionId].addSeed({
+                    ...seed,
+                    isChecked: false,
+                })
+            })
             
             return regions
         }, {}),
