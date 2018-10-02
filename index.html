@@ -17,11 +17,22 @@
     </div>
     <div class="controls">
         <div class="file-options">
-            <span>Last Save: </span>
+            <span class="title">Last Save: </span>
             <div class="upload">Drag save file here to load</div>
             <button class="save">Save</button>
         </div>
-        <select id="region-select"></select>
+        <div class="select-container">
+            <div class="title">Region:</div>
+            <select id="region-select"></select>
+        </div>
+        <div class="total-container">
+            <div class="title total-title">Total:</div>
+            <div class="total">0/0</div>
+        </div>
+        <div class="stats-container">
+            <div class="title">Region Seeds</div>
+            <div class="seeds"></div>
+        </div>
     </div>
 </div>
 
@@ -38,4 +49,5 @@
 <script src="scripts/canvas-controller.js"></script>
 <script src="scripts/region-controller.js"></script>
 <script src="scripts/zoom-controller.js"></script>
+<script src="scripts/stats-controller.js"></script>
 <script src="scripts/save-controller.js"></script>

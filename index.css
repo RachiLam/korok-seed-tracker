@@ -2,6 +2,10 @@
     font-family: sans-serif;
 }
 
+html {
+    height: 100%;
+}
+
 html, body {
     display: flex;
     overflow: hidden;
@@ -15,6 +19,7 @@ body{
 
 .heading {
     display: flex;
+    flex: none;
     align-items: center;
     margin-bottom: 4px;
 }
@@ -60,12 +65,15 @@ body{
 }
 
 .controls {
+    display: flex;
     width: 30%;
+    flex-direction: column;
     padding-left: 8px;
 }
 
 .file-options{
     display: flex;
+    flex: none;
     align-items: center;
     margin-bottom: 8px;
 }
@@ -80,6 +88,56 @@ body{
     padding: 8px;
 }
 
+.title {
+    font-weight: bold;
+}
+
+.select-container{
+    display: flex;
+    flex: none;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.select-container > div{
+    margin-right: 8px;
+}
+
 select {
     height: 30px;
+}
+
+.total-container{
+    display: flex;
+    flex: none;
+}
+
+.total-title {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.total {
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.stats-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.stats-container > .seeds {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+
+.seed-stat {
+    font-size: 14px;
+}
+
+.seed-stat:hover {
+    background-color: #DDD;
 }

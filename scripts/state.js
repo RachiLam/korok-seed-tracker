@@ -3,6 +3,7 @@ const state = (() => {
         'zoomChanged',
         'regionChanged',
         'seedsChanged',
+        'statsChanged',
         'loadSave',
     ].reduce((events, key) => {
         events[key] = key
@@ -94,7 +95,15 @@ const state = (() => {
             },
             clearSeeds(){
                 this.seeds = {}
-            }
+            },
+            getCounts(){
+                const seeds = Object.values(this.seeds)
+                const checkedCount = seeds.reduce((checkedCount, seed) => checkedCount += seed.isChecked? 1: 0, 0)
+                return {
+                    checkedCount,
+                    totalCount: seeds.length,
+                }
+            },
         }
     }
     
@@ -227,6 +236,7 @@ const state = (() => {
             if(!eventEmitted){
                 this.emit(EVENTS.seedsChanged)
             }
+            this.emit(EVENTS.statsChanged)
         },
         setCachedSeeds(){
             this.cachedSeeds = Object.values(this.getSelectedRegion().seeds)
@@ -236,6 +246,7 @@ const state = (() => {
             this.setCachedSeeds()
             this.clearSelectedSeed()
             this.emit(EVENTS.seedsChanged)
+            this.emit(EVENTS.statsChanged)
         },
         checkHighlightedSeed(mouse){
             const [firstSeed] = this.cachedSeeds
@@ -331,6 +342,7 @@ const state = (() => {
             if(this.highlightedSeed !== null){
                 this.highlightedSeed.toggleCheck()
                 this.emit(EVENTS.seedsChanged)
+                this.emit(EVENTS.statsChanged)
             }
         },
         saveState(){
@@ -356,6 +368,8 @@ const state = (() => {
                 
                 this.lastFilename = filename
                 this.setRegion(this.selectedRegion)
+                this.emit(EVENTS.seedsChanged)
+                this.emit(EVENTS.statsChanged)
                 this.emit(EVENTS.loadSave)
             }catch(error){
                 console.log(error)
@@ -426,6 +440,12 @@ const state = (() => {
         cachedSeeds: [],
         highlightedSeed: null,
         selectedSeed: null,
+        colors: {
+            base: '#FFA500',
+            checked: '#008B00',
+            selected: '#DD00DD',
+            highlighted: '#CC0000',
+        },
         regions: Object.entries(regions).reduce((regions, [regionId, region]) => {
             regions[regionId] = {
                 id: regionId,

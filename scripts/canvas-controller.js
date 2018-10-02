@@ -21,10 +21,10 @@
             context.clearRect(0, 0, width*zoom, height*zoom)
             state.getCachedSeeds().forEach(({id: seedId, x, y, numberPosition, isChecked}) => {
                 const color = (
-                    seedId === selectedSeedId? '#FF00FF':
-                    seedId === highlightedSeedId? '#FF0000':
-                    isChecked? '#00FF00':
-                    '#FFA500'
+                    seedId === selectedSeedId? state.colors.selected:
+                    seedId === highlightedSeedId? state.colors.highlighted:
+                    isChecked? state.colors.checked:
+                    state.colors.base
                 )
                 
                 context.beginPath()
