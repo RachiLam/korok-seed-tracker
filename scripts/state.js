@@ -28,7 +28,10 @@ const state = (() => {
         },
         setNumberPosition(key){
             this.numberPosition = key
-        }
+        },
+        toggleCheck(){
+            this.isChecked = !this.isChecked
+        },
     })
     
     const regionState = (regionId) => {
@@ -323,6 +326,12 @@ const state = (() => {
             
             this.selectedSeed.setNumberPosition(key)
             this.emit(EVENTS.seedsChanged)
+        },
+        toggleCheck(mouse){
+            if(this.highlightedSeed !== null){
+                this.highlightedSeed.toggleCheck()
+                this.emit(EVENTS.seedsChanged)
+            }
         },
         saveState(){
             const allSeeds = Object.entries(state.regions).reduce((allSeeds, [regionId, {seeds}]) => {
