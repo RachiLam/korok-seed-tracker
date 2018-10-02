@@ -1,94 +1,7 @@
-<style>
-    * {
-        font-family: sans-serif;
-    }
-    
-    html, body {
-        display: flex;
-        overflow: hidden;
-    }
-    
-    body{
-        width: 100%;
-        flex-direction: column;
-        background-color: #EFEFEF;
-    }
-    
-    .heading {
-        display: flex;
-        align-items: center;
-        margin-bottom: 4px;
-    }
-    
-    .heading > h1 {
-        margin: 0px;
-        margin-right: 16px;
-    }
-    
-    .heading > * {
-        display: inline-block;
-    }
-    
-    .heading > .zoom {
-        margin-left: 8px;
-        margin-right: 8px;
-    }
-    
-    .heading > button {
-        width: 30px;
-        height: 30px;
-    }
-    
-    .container {
-        display: flex;
-        flex-grow: 1;
-    }
-    
-    .map-container {
-        display: flex;
-        flex-grow: 1;
-    }
-    
-    .map {
-        position: relative;
-        width: 100%;
-        overflow: scroll;
-    }
-    
-    .map > img,
-    .map > canvas {
-        position: absolute;
-    }
-    
-    .controls {
-        width: 30%;
-        padding-left: 8px;
-    }
-    
-    .file-options{
-        display: flex;
-        align-items: center;
-        margin-bottom: 8px;
-    }
-    
-    .file-options > * {
-        margin-right: 8px;
-    }
-    
-    .upload {
-        border: 1px dotted black;
-        font-size: 10;
-        padding: 8px;
-    }
-    
-    select {
-        height: 30px;
-    }
-</style>
-
-
 <title>Yahaha!</title>
 <link rel="icon" href="seed.png">
+<link rel="stylesheet" href="index.css">
+
 <div class="heading">
     <h1>Korok Seed Tracker</h1>
     <button>-</button>
@@ -111,6 +24,7 @@
         <select id="region-select"></select>
     </div>
 </div>
+
 <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
