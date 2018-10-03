@@ -335,7 +335,7 @@ const initialState = JSON.parse(`
             "x": 589,
             "y": 271,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "i"
         },
         "43": {
             "regionId": "Akkala",
@@ -343,7 +343,7 @@ const initialState = JSON.parse(`
             "x": 560,
             "y": 271,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "j"
         },
         "44": {
             "regionId": "Akkala",
@@ -686,8 +686,8 @@ const initialState = JSON.parse(`
         "29": {
             "regionId": "Central",
             "id": 29,
-            "x": 549,
-            "y": 266,
+            "x": 551,
+            "y": 269,
             "isChecked": false,
             "numberPosition": "l"
         },
@@ -713,7 +713,7 @@ const initialState = JSON.parse(`
             "x": 458,
             "y": 305,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "j"
         },
         "33": {
             "regionId": "Central",
@@ -846,10 +846,10 @@ const initialState = JSON.parse(`
         "49": {
             "regionId": "Central",
             "id": 49,
-            "x": 225,
-            "y": 629,
+            "x": 224,
+            "y": 626,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "i"
         },
         "50": {
             "regionId": "Central",
@@ -905,7 +905,7 @@ const initialState = JSON.parse(`
             "x": 172,
             "y": 761,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "57": {
             "regionId": "Central",
@@ -961,7 +961,7 @@ const initialState = JSON.parse(`
             "x": 48,
             "y": 784,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "64": {
             "regionId": "Central",
@@ -993,7 +993,7 @@ const initialState = JSON.parse(`
             "x": 315,
             "y": 758,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "68": {
             "regionId": "Central",
@@ -1006,8 +1006,8 @@ const initialState = JSON.parse(`
         "69": {
             "regionId": "Central",
             "id": 69,
-            "x": 403,
-            "y": 727,
+            "x": 402,
+            "y": 730,
             "isChecked": false,
             "numberPosition": "l"
         },
@@ -1403,7 +1403,7 @@ const initialState = JSON.parse(`
             "x": 425,
             "y": 86,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "30": {
             "regionId": "Dueling_Peaks",
@@ -1515,7 +1515,7 @@ const initialState = JSON.parse(`
             "x": 719,
             "y": 171,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "44": {
             "regionId": "Dueling_Peaks",
@@ -1539,7 +1539,7 @@ const initialState = JSON.parse(`
             "x": 664,
             "y": 268,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "i"
         },
         "47": {
             "regionId": "Dueling_Peaks",
@@ -1563,7 +1563,7 @@ const initialState = JSON.parse(`
             "x": 752,
             "y": 433,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "50": {
             "regionId": "Dueling_Peaks",
@@ -1587,7 +1587,7 @@ const initialState = JSON.parse(`
             "x": 702,
             "y": 529,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "i"
         },
         "53": {
             "regionId": "Dueling_Peaks",
@@ -1749,7 +1749,7 @@ const initialState = JSON.parse(`
             "x": 309,
             "y": 487,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "i"
         },
         "14": {
             "regionId": "Eldin",
@@ -1826,8 +1826,8 @@ const initialState = JSON.parse(`
         "23": {
             "regionId": "Eldin",
             "id": 23,
-            "x": 211,
-            "y": 930,
+            "x": 214,
+            "y": 933,
             "isChecked": false,
             "numberPosition": "l"
         },
@@ -2399,7 +2399,7 @@ const initialState = JSON.parse(`
             "x": 573,
             "y": 381,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "j"
         },
         "50": {
             "regionId": "Faron",
@@ -3037,7 +3037,7 @@ const initialState = JSON.parse(`
             "x": 424,
             "y": 404,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "i"
         },
         "17": {
             "regionId": "Hateno",
@@ -3093,7 +3093,7 @@ const initialState = JSON.parse(`
             "x": 169,
             "y": 504,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "24": {
             "regionId": "Hateno",
@@ -3171,15 +3171,15 @@ const initialState = JSON.parse(`
             "regionId": "Hateno",
             "id": 33,
             "x": 144,
-            "y": 174,
+            "y": 176,
             "isChecked": false,
             "numberPosition": "l"
         },
         "34": {
             "regionId": "Hateno",
             "id": 34,
-            "x": 158,
-            "y": 165,
+            "x": 159,
+            "y": 163,
             "isChecked": false,
             "numberPosition": "l"
         },
@@ -3370,10 +3370,10 @@ const initialState = JSON.parse(`
         "58": {
             "regionId": "Hateno",
             "id": 58,
-            "x": 869,
-            "y": 667,
+            "x": 871,
+            "y": 669,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "59": {
             "regionId": "Hateno",
@@ -3668,10 +3668,10 @@ const initialState = JSON.parse(`
         "29": {
             "regionId": "Hebra",
             "id": 29,
-            "x": 936,
-            "y": 570,
+            "x": 929,
+            "y": 572,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "j"
         },
         "30": {
             "regionId": "Hebra",
@@ -3924,8 +3924,8 @@ const initialState = JSON.parse(`
         "61": {
             "regionId": "Hebra",
             "id": 61,
-            "x": 1642,
-            "y": 886,
+            "x": 1644,
+            "y": 881,
             "isChecked": false,
             "numberPosition": "l"
         },
@@ -4046,24 +4046,24 @@ const initialState = JSON.parse(`
         "3": {
             "regionId": "Hyrule_Castle",
             "id": 3,
-            "x": 476,
-            "y": 791,
+            "x": 474,
+            "y": 793,
             "isChecked": false,
             "numberPosition": "j"
         },
         "4": {
             "regionId": "Hyrule_Castle",
             "id": 4,
-            "x": 489,
-            "y": 787,
+            "x": 488,
+            "y": 780,
             "isChecked": false,
-            "numberPosition": "i"
+            "numberPosition": "k"
         },
         "5": {
             "regionId": "Hyrule_Castle",
             "id": 5,
-            "x": 503,
-            "y": 787,
+            "x": 506,
+            "y": 790,
             "isChecked": false,
             "numberPosition": "l"
         },
@@ -4169,7 +4169,7 @@ const initialState = JSON.parse(`
             "x": 709,
             "y": 434,
             "isChecked": false,
-            "numberPosition": "j"
+            "numberPosition": "i"
         },
         "19": {
             "regionId": "Hyrule_Castle",
@@ -4235,7 +4235,7 @@ const initialState = JSON.parse(`
             "x": 97,
             "y": 584,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "i"
         },
         "2": {
             "regionId": "Lake",
@@ -4403,7 +4403,7 @@ const initialState = JSON.parse(`
             "x": 400,
             "y": 666,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "i"
         },
         "23": {
             "regionId": "Lake",
@@ -4499,7 +4499,7 @@ const initialState = JSON.parse(`
             "x": 654,
             "y": 618,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "i"
         },
         "35": {
             "regionId": "Lake",
@@ -4523,7 +4523,7 @@ const initialState = JSON.parse(`
             "x": 571,
             "y": 613,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "38": {
             "regionId": "Lake",
@@ -5548,10 +5548,10 @@ const initialState = JSON.parse(`
         "11": {
             "regionId": "Ridgeland",
             "id": 11,
-            "x": 1781,
-            "y": 987,
+            "x": 1785,
+            "y": 988,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "12": {
             "regionId": "Ridgeland",
@@ -6193,7 +6193,7 @@ const initialState = JSON.parse(`
             "x": 213,
             "y": 588,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "12": {
             "regionId": "Tabantha",
@@ -6201,7 +6201,7 @@ const initialState = JSON.parse(`
             "x": 570,
             "y": 893,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "i"
         },
         "13": {
             "regionId": "Tabantha",
@@ -6327,9 +6327,9 @@ const initialState = JSON.parse(`
             "regionId": "Tabantha",
             "id": 28,
             "x": 1393,
-            "y": 2060,
+            "y": 2064,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "k"
         },
         "29": {
             "regionId": "Tabantha",
@@ -7069,7 +7069,7 @@ const initialState = JSON.parse(`
             "x": 427,
             "y": 511,
             "isChecked": false,
-            "numberPosition": "l"
+            "numberPosition": "i"
         },
         "16": {
             "regionId": "Woodland",

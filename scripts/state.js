@@ -352,7 +352,10 @@ const state = (() => {
             }, {})
             const blob = new Blob([JSON.stringify(allSeeds, null, 4)], {type: "text/plain;charset=utf-8"})
             const date = $.format.date(Date.now(), 'yyyy-MM-dd--HH-mm-ss')
-            saveAs(blob, `seeds--${date}.txt`)
+            const filename = `seeds--${date}.txt`
+            saveAs(blob, filename)
+            this.lastFilename = filename
+            this.emit(EVENTS.loadSave)
         },
         loadSave(filename, saveString){
             try{
