@@ -434,7 +434,7 @@ const state = (() => {
         ...stateGetters,
         ...stateEvents,
         lastFilename: '',
-        writeMode: true,
+        writeMode: false,
         zoom: 100,
         selectedRegion: null,
         cachedSeeds: [],
