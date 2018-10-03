@@ -7,6 +7,7 @@
     <button>-</button>
     <div class="zoom">100%</div>
     <button>+</button>
+    <button class="show-bindings">i</button>
 </div>
 <div class="container">
     <div class="map-container">
@@ -35,6 +36,71 @@
         </div>
     </div>
 </div>
+<div class="key-bindings">
+    <table>
+        <thead>
+            <tr>
+                <th>Action / Key Binding</th>
+                <th>Result</th>
+                <th class="close-bindings">X</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>W, A, S, D</td>
+                <td>Pan map</td>
+            </tr>
+            <tr>
+                <td>Q, E</td>
+                <td>Zoom out, Zoom in</td>
+            </tr>
+            <tr>
+                <td>Click seed marker</td>
+                <td>Toggle seed check</td>
+            </tr>
+            <tr>
+                <td>Z</td>
+                <td>Download save file</td>
+            </tr>
+            <tr>
+                <td>Drag save file to dotted area</td>
+                <td>Load save file</td>
+            </tr>
+            <tr>
+                <td>_</td>
+                <td></td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
+                <th>Advanced Action</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ctrl + click seed marker</td>
+                <td>Select seed marker (marker turns purple)</td>
+            </tr>
+            <tr>
+                <td>W, A, S, D (with selected seed)</td>
+                <td>Nudge seed marker position</td>
+            </tr>
+            <tr>
+                <td>I, J, K, L (with selected seed)</td>
+                <td>Adjust seed number position</td>
+            </tr>
+            <tr>
+                <td>R (with selected seed)</td>
+                <td>Assign new id number through prompt</td>
+            </tr>
+            <tr>
+                <td>Ctrl + click map (with selected seed)</td>
+                <td>Deselect seed</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -51,3 +117,4 @@
 <script src="scripts/zoom-controller.js"></script>
 <script src="scripts/stats-controller.js"></script>
 <script src="scripts/save-controller.js"></script>
+<script src="scripts/key-bindings-controller.js"></script>

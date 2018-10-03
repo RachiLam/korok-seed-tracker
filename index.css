@@ -43,6 +43,10 @@ body{
     height: 30px;
 }
 
+.heading > button:last-child {
+    margin-left: 200px;
+}
+
 .container {
     display: flex;
     flex-grow: 1;
@@ -140,4 +144,44 @@ select {
 
 .seed-stat:hover {
     background-color: #DDD;
+}
+
+.key-bindings {
+    display: none;
+    position: absolute;
+    background-color: #DDD;
+    box-shadow: 2px 2px #AAA;
+    margin-left: 310px;
+    padding: 8px;
+}
+
+.key-bindings .close-bindings {
+    width: 20px;
+    height: 20px;
+}
+
+.key-bindings .close-bindings:hover {
+    color: #C00;
+    cursor: pointer;
+}
+
+.key-bindings tbody:first-of-type tr:last-child td {
+    color: #DDD;
+    line-height: 30px;
+}
+
+.key-bindings th {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.key-bindings td {
+    font-size: 12px;
+    padding-bottom: 4px;
+}
+
+.key-bindings td:nth-of-type(2),
+.key-bindings th:nth-of-type(2) {
+    padding-left: 30px;
 }
