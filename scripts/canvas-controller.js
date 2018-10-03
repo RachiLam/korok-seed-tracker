@@ -37,7 +37,7 @@
                 context.font=`${parseInt(fontSize*zoom)}px sans-serif`
                 
                 const textOffset = {
-                    x: numberPosition === 'j'? -1.5*numberOffset: numberPosition === 'l'? numberOffset: -5,
+                    x: numberPosition === 'j'? -1.9*numberOffset: numberPosition === 'l'? numberOffset: -5,
                     y: numberPosition === 'i'? -1.1*numberOffset: numberPosition === 'k'? 1.6*numberOffset: 5,
                 }
                 context.fillText(seedId, x*zoom + textOffset.x*zoom, y*zoom + textOffset.y*zoom)
