@@ -26,7 +26,14 @@
         resetUploadColor(){
             upload.css('border-color', this.colors.base)
             upload.css('color', this.colors.base)
-        }
+        },
+        loadFile(file){
+            const reader = new FileReader()
+            reader.readAsText(file)
+            reader.onload = data => {
+                state.loadSave(file.name, data.target.result)
+            }
+        },
     }
     
     const upload = $('.upload')
@@ -46,13 +53,20 @@
             const {files} = event.originalEvent.dataTransfer
             if(files.length > 0){
                 const [file] = files
-                const reader = new FileReader()
-                reader.readAsText(file)
-                reader.onload = data => {
-                    state.loadSave(file.name, data.target.result)
-                }
+                controller.loadFile(file)
             }
         },
+    })
+    const uploadInput = $('input[type="file"]')
+    uploadInput.change(event => {
+        const [input] = uploadInput
+        if(input.files && input.files.length > 0){
+            const file = input.files[0]
+            controller.loadFile(file)
+        }
+    })
+    $('.load').click(event => {
+        uploadInput.trigger('click')
     })
     state.on('loadSave', state => {
         upload.html(state.lastFilename)
