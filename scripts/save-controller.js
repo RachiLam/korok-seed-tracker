@@ -6,8 +6,10 @@
         }
     })
     
-    $('.save').click(() => {
+    const saveButton = $('.save')
+    saveButton.click(() => {
         state.saveState()
+        controller.resetSaveButton()
     })
     
     const controller = {
@@ -33,6 +35,12 @@
             reader.onload = data => {
                 state.loadSave(file.name, data.target.result)
             }
+        },
+        setSaveButtonDirty(){
+            saveButton.css('color', this.colors.hover)
+        },
+        resetSaveButton(){
+            saveButton.css('color', this.colors.base)
         },
     }
     
@@ -68,7 +76,13 @@
     $('.load').click(event => {
         uploadInput.trigger('click')
     })
+    
+    state.on('statsChanged', state => {
+        controller.setSaveButtonDirty()
+    })
+    
     state.on('loadSave', state => {
         upload.html(state.lastFilename)
+        controller.resetSaveButton()
     })
 })()
