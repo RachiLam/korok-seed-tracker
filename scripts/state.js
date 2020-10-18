@@ -208,7 +208,7 @@ const state = (() => {
     
     const stateActions = {
         zoomIn(){
-            if(state.zoom < 300){
+            if(state.zoom < 500){
                 this.zoom += 10
                 this.clearSelectedSeed()
                 this.emit(EVENTS.zoomChanged)
