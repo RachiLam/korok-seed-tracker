@@ -71,7 +71,7 @@ body{
 
 .controls {
     display: flex;
-    width: 300px;
+    width: 350px;
     flex-direction: column;
     margin-left: 8px;
 }
@@ -85,6 +85,8 @@ body{
 }
 
 .file-options > * {
+    display: flex;
+    align-items: center;
     margin-right: 8px;
 }
 
