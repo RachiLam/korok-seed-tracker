@@ -9,7 +9,7 @@ const state = (() => {
         events[key] = key
         return events
     }, {})
-    
+
     const seedState = ({regionId, id, x, y, isChecked, numberPosition}) => ({
         regionId,
         id,
@@ -34,7 +34,7 @@ const state = (() => {
             this.isChecked = !this.isChecked
         },
     })
-    
+
     const regionState = (regionId) => {
         let baseRadius
         let numberOffset
@@ -72,13 +72,13 @@ const state = (() => {
                 fontSize = 12
                 break
         }
-        
+
         return {
             seeds: {},
             baseRadius,
             numberOffset,
             fontSize,
-            
+
             addSeed(config){
                 const nextId = Object.keys(this.seeds).length + 1
                 this.seeds[nextId] = seedState({
@@ -106,7 +106,7 @@ const state = (() => {
             },
         }
     }
-    
+
     const regions = {
         Akkala: {
             name: 'Akkala',
@@ -205,23 +205,43 @@ const state = (() => {
             height: 747,
         },
     }
-    
+
     const stateActions = {
         zoomIn(){
+            const oldZoom = this.zoom;
+
             if(state.zoom < 500){
                 this.zoom += 10
                 this.clearSelectedSeed()
                 this.emit(EVENTS.zoomChanged)
             }
+
+            gtag('event', 'zoom_in', {
+                regionId: this.selectedRegion,
+                oldZoom,
+                newZoom: this.zoom,
+            });
         },
         zoomOut(){
+            const oldZoom = this.zoom;
+
             if(state.zoom > 10){
                 this.zoom -= 10
                 this.clearSelectedSeed()
                 this.emit(EVENTS.zoomChanged)
             }
+
+            gtag('event', 'zoom_out', {
+                regionId: this.selectedRegion,
+                oldZoom,
+                newZoom: this.zoom,
+            });
         },
         setRegion(regionId){
+            if (this.selectedRegion !== null) {
+                gtag('event', 'set_region', { regionId });
+            }
+
             this.selectedRegion = regionId
             this.setCachedSeeds()
             this.highlightedSeed = null
@@ -254,16 +274,16 @@ const state = (() => {
                 if(highlightedIndex === null && seed.checkDistance(mouse)){
                     highlightedIndex = index
                 }
-                
+
                 return highlightedIndex
             }, null)
-            
+
             const emitEvent = (
                 this.highlightedSeed === null && highlightedIndex !== null
                 || this.highlightedSeed !== null && highlightedIndex === null
                 || (this.highlightedSeed && this.highlightedSeed.id !== this.cachedSeeds[highlightedIndex].id)
             )
-            
+
             if(highlightedIndex !== null){
                 const [highlightedSeed] = this.cachedSeeds.splice(highlightedIndex, 1)
                 this.highlightedSeed = highlightedSeed
@@ -271,22 +291,22 @@ const state = (() => {
             }else{
                 this.highlightedSeed = null
             }
-            
+
             if(emitEvent){
                 this.emit(EVENTS.seedsChanged)
             }
-            
+
             return emitEvent
         },
         checkSelection(mouse){
             const oldSelectedSeed = this.selectedSeed
-            
+
             if(this.highlightedSeed !== null){
                 this.selectedSeed = this.selectedSeed === null || this.selectedSeed !== this.highlightedSeed? this.highlightedSeed: null
             }else{
                 this.selectedSeed = null
             }
-            
+
             if(oldSelectedSeed !== this.selectedSeed){
                 this.emit(EVENTS.seedsChanged)
             }
@@ -298,6 +318,14 @@ const state = (() => {
             if(this.selectedSeed !== null){
                 this.selectedSeed.x += x
                 this.selectedSeed.y += y
+
+                gtag('event', 'nudge_selected_seed', {
+                    regionId: this.selectedSeed.regionId,
+                    id: this.selectedSeed.id,
+                    x: this.selectedSeed.x,
+                    y: this.selectedSeed.y,
+                })
+
                 this.emit(EVENTS.seedsChanged)
             }
         },
@@ -305,27 +333,34 @@ const state = (() => {
             if(this.selectedSeed === null){
                 return
             }
-            
+
             const region = this.getSelectedRegion()
             const {seeds} = region
             const seedList = Object.values(seeds).sort(({id: id1}, {id: id2}) => (id1 - id2))
-            
+
             const newId = parseInt(prompt('Enter new id'))
             if(isNaN(newId) || this.selectedSeed.id === newId || newId < 1 || newId > seedList.length){
                 return
             }
             const oldIndex = this.selectedSeed.id - 1
             const newIndex = newId - 1
-            
+
+            gtag('event', 'reorder', {
+                regionId: this.selectedSeed.regionId,
+                id: this.selectedSeed.id,
+                oldIndex,
+                newIndex,
+            })
+
             region.clearSeeds()
-            
+
             seedList.splice(oldIndex, 1)
             seedList.splice(newIndex, 0, this.selectedSeed)
-            
+
             seedList.forEach(seed => {
                 region.addSeed(seed)
             })
-            
+
             this.setCachedSeeds()
             this.selectedSeed = region.seeds[newId]
             this.emit(EVENTS.seedsChanged)
@@ -334,18 +369,34 @@ const state = (() => {
             if(this.selectedSeed === null){
                 return
             }
-            
+
+            gtag('event', 'alter_number_position', {
+                regionId: this.selectedSeed.regionId,
+                id: this.selectedSeed.id,
+                key,
+            })
+
             this.selectedSeed.setNumberPosition(key)
             this.emit(EVENTS.seedsChanged)
         },
         toggleCheck(mouse){
             if(this.highlightedSeed !== null){
                 this.highlightedSeed.toggleCheck()
+
+                gtag('event', 'toggle_check', {
+                    regionId: this.highlightedSeed.regionId,
+                    id: this.highlightedSeed.id,
+                    isChecked: this.highlightedSeed.isChecked,
+                });
+
                 this.emit(EVENTS.seedsChanged)
                 this.emit(EVENTS.statsChanged)
             }
         },
         saveState(){
+            const totalCheckedCount = Object.values(state.regions).reduce((sum, region) => sum + region.getCounts().checkedCount, 0);
+            gtag('event', 'save_state', { totalCheckedCount });
+
             const allSeeds = Object.entries(state.regions).reduce((allSeeds, [regionId, {seeds}]) => {
                 allSeeds[regionId] = seeds
                 return allSeeds
@@ -368,18 +419,22 @@ const state = (() => {
                         })
                     })
                 })
-                
+
+                const totalCheckedCount = Object.values(state.regions).reduce((sum, region) => sum + region.getCounts().checkedCount, 0);
+                gtag('event', 'load_save', { totalCheckedCount });
+
                 this.lastFilename = filename
                 this.setRegion(this.selectedRegion)
                 this.emit(EVENTS.seedsChanged)
                 this.emit(EVENTS.statsChanged)
                 this.emit(EVENTS.loadSave)
             }catch(error){
+                gtag('event', 'load_error');
                 console.log(error)
             }
         },
     }
-    
+
     const stateGetters = {
         getCachedSeeds(){
             // move cached seed to the end so it is drawn last
@@ -406,7 +461,7 @@ const state = (() => {
             return this.zoom/100
         },
     }
-    
+
     const stateEvents = {
         listeners: Object.keys(EVENTS).reduce((listeners, key) => {
             listeners[key] = []
@@ -418,20 +473,20 @@ const state = (() => {
             }else if(typeof handler !== 'function'){
                 throw new Error(`Handler should be a function`)
             }
-            
+
             this.listeners[event].push(handler)
         },
         emit(event){
             if(this.listeners[event] === undefined){
                 throw new Error(`State event "${event}" is undefined`)
             }
-            
+
             this.listeners[event].forEach(handler => {
                 handler(this)
             })
         },
     }
-    
+
     const state = {
         ...stateActions,
         ...stateGetters,
@@ -455,18 +510,18 @@ const state = (() => {
                 ...region,
                 ...regionState(regionId),
             }
-            
+
             Object.values(initialState[regionId]).forEach(seed => {
                 regions[regionId].addSeed({
                     ...seed,
                     isChecked: false,
                 })
             })
-            
+
             return regions
         }, {}),
     }
-    
+
     state.setRegion('Akkala')
     return state
 })()
